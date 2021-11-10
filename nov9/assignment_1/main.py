@@ -9,4 +9,4 @@ Modified: November 9, 2021
 ASSIGNMENT = "1"
 
 if __name__ == "__main__":
-    print(f"Assignment: {ASSIGNMENT}")
+    print(f"Python installed")
