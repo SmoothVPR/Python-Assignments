@@ -32,7 +32,7 @@ class Game(object):
         size = len(self.people)
         if size < 1:
             print("Where is everybody...?")
-        elif size < 2:
+        elif size < 3:
             print("The room isn't too crowded...")
         elif size < 6:
             print("The room is too crowded!")
@@ -47,7 +47,7 @@ class Game(object):
             self.display_people()
 
             random_idx = randint(0, len(self.people)-1)
-            print("Room is crowded! Removing ", self.people[random_idx], "...", sep="")
+            print("Removing ", self.people[random_idx], "...", sep="")
             self.people.pop(random_idx)
 
 # Kinda unnecessay but I'm trying to get them bonus points
