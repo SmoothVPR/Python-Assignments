@@ -50,7 +50,7 @@ def exercise_3_d(string):
     print("".join(sorted(set(string))))
     print("")
 
-def exercise_3_f():
+def exercise_3_e():
     """
     Your goal in this programming exercise is to determine, whether the phrase
     represents a palindrome or not. Input data contains number of phrases in the  
@@ -95,4 +95,4 @@ if __name__ == "__main__":
     exercise_3_b("thinker", "hello")
     exercise_3_c("Sammy")
     exercise_3_d("Mississippi")
-    exercise_3_f()
+    exercise_3_e()
