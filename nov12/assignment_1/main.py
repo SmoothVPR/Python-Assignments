@@ -6,7 +6,7 @@ Created:  November 11, 2021
 Modified: November 11, 2021
 """
 
-# import math
+import math
 
 DAY = 4
 EXERCISE = 8
@@ -41,7 +41,7 @@ def func1(name): # exercise_8_2
 
 def func3(x, y, z):
     """
-    - [ ] Define a function func3(x,y,z) that takes three arguments x,y,z where z is
+    - [x] Define a function func3(x,y,z) that takes three arguments x,y,z where z is
           true it will return x and when z is false it should return y . func3(‘hello’goodbye’,false)
     """
     print("exercise_8_3:")
@@ -53,119 +53,98 @@ def func3(x, y, z):
 
 def func4(x, y):
     """
-    define a function func4(x,y) which returns the product of both the values.
+    - [x] define a function func4(x,y) which returns the product of both the values.
     """
     print("exercise_8_4:")
 
     print(x, "*", y, "= ", end="")
     return x * y
 
-
 def is_even(x): # exercise_8_5
     """
-    D={‘k1’:[1,2,3]} what is the output of d[k1][1]
+    define a function called as is_even that takes one argument,
+    which returns true when even values is passed and false if it is not.
     """
     print("exercise_8_5:")
 
     return x % 2 == 0
 
-def exercise_8_6():
+def is_greater(a, b):
     """
-    Can you create a list [1,[2,3]] into a tuple
+    define a function that takes two arguments, and returns true if the first
+    value is greater than the second value and returns false if it is less than
+    or equal to the second.
     """
     print("exercise_8_6:")
 
-    x = [ 1, [ 2, 3 ] ]
+    return a > b
 
-    conversion = tuple(x)
-    print(conversion)
-
-    print("")
-
-def exercise_8_7():
+def sum_of_two(a, b):
     """
-    With a single set function can you turn the word ‘Mississippi’ to distinct character word.
+    Define a function which takes arbitrary number of arguments and returns the sum of the arguments.
     """
     print("exercise_8_7:")
 
-    string = "Mississipi"
-    s = set(string)
+    return a + b
 
-    result = "".join(list(sorted(s)))
-    print(result)
-
-    print("")
-
-def exercise_8_8():
+def n_args_to_list(*args):
     """
-    Can you add an element ‘X’ to the above created set
+    Define a function which takes arbitrary number of arguments and
+    returns a list containing only the arguments that are even.
     """
     print("exercise_8_8:")
 
-    string = "Mississipi"
-    s = set(string)
-    s.add("X")
+    return [int(x) for x in list(args) if int(x) % 2 == 0]
 
-    result = "".join(list(sorted(s)))
-
-    print("exercise_8_h:")
-    print(result)
-    print("")
-
-def exercise_8_9():
+def format_str(string):
     """
-    Output of set([1,1,2,3])
+    Define a function that takes a string and returns a matching string
+    where every even letter is uppercase and every odd letter is lowercase 
     """
     print("exercise_8_9:")
 
-    s = set([ 1, 1, 2, 3 ])
+    return "".join([x.lower() if i % 2 == 0 else x.upper() for i, x in enumerate(string)])
 
-    print(s)
-    print("")
-
-def exercise_8_10():
+def greater_or_lesser(a, b):
     """
-    Output of set([1,1,2,3])
+    Write a function which gives lesser than a given number
+    if both the numbers are even, but returns greater if one or both or odd.
     """
     print("exercise_8_10:")
 
-    s = set([ 1, 1, 2, 3 ])
+    return "lesser" if a % 2 == 0 and b % 2 == 0 else "greater"
 
-    print(s)
-    print("")
-
-def exercise_8_11():
+def same_letter(string_1, string_2):
     """
-    Output of set([1,1,2,3])
+    Write a function which takes two-strings and returns true if
+    both the strings start with the same letter
     """
     print("exercise_8_11:")
 
-    s = set([ 1, 1, 2, 3 ])
+    return string_1[0] == string_2[0]
 
-    print(s)
-    print("")
-
-def exercise_8_12():
+def opposite_distance(x):
     """
-    Output of set([1,1,2,3])
+    Given a value, return a value which is twice as far as other side of 7
     """
     print("exercise_8_12:")
 
-    s = set([ 1, 1, 2, 3 ])
+    result = 7
 
-    print(s)
-    print("")
+    if x > 7:
+        result -= (math.fabs(x - 7) * 2)
+    else:
+        result += (math.fabs(x - 7) * 2)
 
-def exercise_8_13():
+    return result
+
+def special_formatter(string):
     """
-    Output of set([1,1,2,3])
+    A function that capitalizes first and fourth character of a word in a string.
     """
     print("exercise_8_13:")
 
-    s = set([ 1, 1, 2, 3 ])
-
-    print(s)
-    print("")
+    return "".join([x.upper() if i == 0 or i == 3 else x for i, x in enumerate(string)])
 
 if __name__ == "__main__":
     display_assignment()
@@ -188,10 +167,31 @@ if __name__ == "__main__":
     print(is_even(21), "\n")
 
     # exercise_8_6()
+    print("5 > 4 ?", is_greater(5, 4), "\n")
+    print("4 > 5 ?", is_greater(4, 5), "\n")
+
     # exercise_8_7()
+    print("420 + 69 =", sum_of_two(420, 69), "\n")
+
     # exercise_8_8()
+    print("list of 10 args:", n_args_to_list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), "\n")
+
     # exercise_8_9()
+    print("test string:", format_str("test string"), "\n")
+
     # exercise_8_10()
+    print("8, 10:", greater_or_lesser(8, 10), "\n")
+    print("9, 10:", greater_or_lesser(9, 10), "\n")
+
     # exercise_8_11()
+    print("Freaky, Friday:", same_letter("Freaky", "Friday"), "\n")
+    print("Spooky, Friday:", same_letter("Spooky", "Friday"), "\n")
+
     # exercise_8_12()
+    # assert opposite_distance(8) == 5
+    # assert opposite_distance(6) == 9
+    print("12:", opposite_distance(12), "\n")
+    print("0:", opposite_distance(0), "\n")
+
     # exercise_8_13()
+    print("captitalize this!:", special_formatter("capitalize this"), "\n")
