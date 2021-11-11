@@ -13,8 +13,8 @@ EXERCISE = 6
 
 class Game(object):
     """
-    Save your program from Three is a Crowd under a new name.
-    Add an else statement to your if tests. If the else statement is run, have it print a message that the room is not very crowded.
+    - [x] Save your program from Three is a Crowd under a new name.
+    - [x] Add an else statement to your if tests. If the else statement is run, have it print a message that the room is not very crowded.
     """
     def __init__(self, *args, **kwargs):
         self.people = []
