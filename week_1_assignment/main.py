@@ -28,8 +28,8 @@ from logger import Logger
 logger = Logger(f"{datetime.now().strftime('%Y-%m-%d')}_log.txt")
 
 sheet_names = ( "Summary Rolling MoM",
-               "VOC Rolling MoM",
-               "Monthly Verbatim Statements" )
+                "VOC Rolling MoM",
+                "Monthly Verbatim Statements" )
 
 month_names = ( "January",
                 "February",
