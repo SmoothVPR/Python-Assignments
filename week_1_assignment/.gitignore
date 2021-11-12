@@ -3,5 +3,7 @@ __pycache__
 
 # Filetypes
 *.ipynb
+*log.txt
 
 # Misc
+Problem_Statement.txt

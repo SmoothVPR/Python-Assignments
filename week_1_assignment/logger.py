@@ -15,6 +15,9 @@ import sys
 from datetime import datetime
 
 class Logger(object):
+    """
+    Logger object that
+    """
     def __init__(self, log_file):
         self.log_file   = log_file
 
@@ -29,6 +32,10 @@ class Logger(object):
             f.write(self.prefix() + "Log file created.\n")
 
     def init(self):
+        """
+        Creates specified log file if it does not already exist. Otherwise,
+        it does nothing. Finally, the write mode is changed to append.
+        """
         if not pathlib.Path(self.log_file).is_file():
             sys.stdout.write(f"Log file not found. Creating '{self.log_file}'.\n\n")
             self._create_log_file()
