@@ -20,6 +20,7 @@ import numpy as np
 
 import pathlib
 import sys
+import re
 
 from datetime import datetime
 from logger import Logger
@@ -42,19 +43,6 @@ month_names = ( "January",
                 "October",
                 "November",
                 "December" )
-
-abrv_month_names = ( "Jan",
-                     "Feb",
-                     "Mar",
-                     "Apr",
-                     "May",
-                     "Jun",
-                     "Jul",
-                     "Aug",
-                     "Sep",
-                     "Oct",
-                     "Nov",
-                     "Dec" )
 
 def handle_command_line():
     argv = sys.argv
@@ -94,6 +82,20 @@ def extract_month_from_file(file_path):
     logger.destroy()
     sys.exit(1)
 
+def extract_year_from_file(file_path):
+    regex = "(?<=_)[0-9]{4}(?=\\.xlsx)"
+    match = re.search(regex, file_path)
+    
+    if match != None:
+        target_year = match.group(0)
+
+        logger.log(f"Target year identified as {target_year}.")
+        return target_year
+
+    logger.log(f"Could not determine year from '{file_path}'.")
+    logger.destroy()
+    sys.exit(1)
+
 def get_dataframe(file_path, sheet_name=0):
     logger.log(f"Loading excel spreadsheet '{file_path}'...")
 
@@ -108,56 +110,107 @@ def get_dataframe(file_path, sheet_name=0):
 
     sys.exit(1)
 
-def parse_summary(df, target_month):
-    logger.log(f"Attempting to parse Month of {target_month} in '{sheet_names[0]}'...")
+def parse_summary(df, target_month, target_year):
+    logger.log(f"Attempting to parse {target_month} of {target_year} in '{sheet_names[0]}'...")
 
     df = df.iloc[:12]       # clean up rows
     df = df[df.columns[:6]] # clean up columns
 
     # Clean up index column
     dt_format = "%Y-%m-%d %H:%M:%S"
-    convert_dt_to_month = lambda x: datetime.strptime(str(x), dt_format).strftime("%B")
-    df["Unnamed: 0"] = df["Unnamed: 0"].map(convert_dt_to_month)
+    df.rename(columns={'Unnamed: 0': 'index'}, inplace=True)
 
-    target_row = df.loc[df["Unnamed: 0"] == target_month]
-    values = target_row.values.tolist()[0][1:]
-    columns = df.columns[1:]
+    # Clean up index datetime
+    convert_dt_to_month = lambda x: datetime.strptime(str(x), dt_format).strftime("%b-%y")
+    df["index"] = df["index"].map(convert_dt_to_month)
 
     # Clean up 'Calls Offered' column
     df["Calls Offered"] = df["Calls Offered"].astype(np.int64)
 
+    # Format target_month & target_year to "%b-%y"
+    target_dt = target_month[:3] + "-" + target_year[2:]
+    target_row = df.loc[df["index"] == target_dt]
+
+    values = target_row.values.tolist()[0][1:]
+    columns = df.columns[1:]
+
     result = []
     for column, value in zip(columns, values):
-        # formatting by data type
         if df[column].dtype == np.int64:
             result.append(tuple([ column, f"{int(value):,}" ]))
         else:
             result.append(tuple([ column, f"{100 * value:.2f}%" ]))
 
-    logger.log(f"Results for Summary Rolling MoM of {target_month}: {str(result)}")
+    logger.log(f"Results for Summary Rolling MoM of {target_month} of {target_year}: {str(result)}")
 
-def parse_voc_rolling(df, target_month):
+def parse_voc_rolling(df, target_month, target_year):
     df, target_month
-    logger.log(f"Attempting to parse Month of {target_month} in '{sheet_names[1]}'...")
+    logger.log(f"Attempting to parse {target_month} of {target_year} in '{sheet_names[1]}'...")
 
-    # result = []
-    # for column, value in zip(columns, values):
-        # result.append(tuple([ column, value ]))
-    # logger.log(f"Results for VOC Rolling MoM of {target_month}: {str(result)}")
+    # Clean up index column
+    df.rename(columns={'Unnamed: 0':'index'}, inplace=True)
+
+    # Remove all 'Unnamed' columns
+    for col in df.columns:
+        if "Unnamed" in str(col):
+            df.drop(col, axis=1, inplace=True)
+
+    # Clean up column names
+    dt_format = "%Y-%m-%d %H:%M:%S"
+    columns = df.columns[1:]
+    new_axis = [ "index" ]
+
+    for column in columns:
+        if type(column) == datetime:
+            new_axis.append(datetime.strptime(str(column), dt_format).strftime("%b-%y"))
+        else:
+            new_axis.append(datetime.strptime(str(column) + str(target_year), "%B%Y").strftime("%b-%y"))
+
+    df.set_axis(new_axis, axis=1, inplace=True)
+
+    # Drop NaN
+    df.dropna(axis=0, inplace=True)
+
+    # Select datetime in target column
+    target_dt = target_month[:3] + "-" + target_year[2:]
+
+    # Final formatting
+    columns = [ "Base Size",
+                "Promoters",
+                "Passives",
+                "Detractors",
+                "Overall NPS %",
+                "SAT with Agent %",
+                "DSAT with Agent %" ]
+
+    values = df[target_dt].values.tolist()
+
+    result = []
+    for column, value in zip(columns, values):
+        if value > 1:
+            if column == columns[0]: # Base Size
+                result.append(tuple([ column, f"{int(value):,}" ]))
+            elif column == columns[1]: # Promoters:
+                result.append(tuple([ column, f"{'good' if value > 200 else 'bad'}" ]))
+            else: # Passives & Detractors:
+                result.append(tuple([ column, f"{'good' if value > 100 else 'bad'}" ]))
+        else:
+            result.append(tuple([ column, f"{100 * value:.2f}%" ]))
+
+    logger.log(f"Results for VOC Rolling MoM of {target_month} of {target_year}: {str(result)}")
 
 if __name__ == "__main__":
     file_path = handle_command_line()
     display_assignment()
-
     logger.init()
+
     target_month = extract_month_from_file(file_path)
+    target_year = extract_year_from_file(file_path) 
 
     df_summary_rolling = get_dataframe(file_path, sheet_name=sheet_names[0])
-    parse_summary(df_summary_rolling, target_month)
+    parse_summary(df_summary_rolling, target_month, target_year)
 
     df_voc_rolling     = get_dataframe(file_path, sheet_name=sheet_names[1])
-    parse_voc_rolling(df_voc_rolling, target_month)
-
-    # df_statements      = get_dataframe(file_path, sheet_name=2)
+    parse_voc_rolling(df_voc_rolling, target_month, target_year)
 
     logger.destroy()
