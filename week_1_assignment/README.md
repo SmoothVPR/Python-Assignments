@@ -13,14 +13,14 @@ FCR: 86.50%
 DSAT:  14.20%  
 CSAT: 78.30%  
 
-- Similarly go to "VOC Rolling MoM" tab
-- Grab all the values related to Jan-18 and print.
-- Rest all values remain the same.
+- [x] Similarly go to "VOC Rolling MoM" tab
+- [x] Grab all the values related to Jan-18 and print.
+- [x] Rest all values remain the same.
 
 ### In Net Promoter Score
-- Promoters > 200 : good
-- Promoters < 200 : bad
-- Passives > 100 : good
-- Passives < 100 : bad
-- Detractors > 100 : good
-- Detractors < 100 : bad
+Promoters > 200 : good  
+Promoters < 200 : bad  
+Passives > 100 : good  
+Passives < 100 : bad  
+Detractors > 100 : good  
+Detractors < 100 : bad  
