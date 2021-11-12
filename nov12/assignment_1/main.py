@@ -112,7 +112,16 @@ def greater_or_lesser(a, b):
     """
     print("exercise_8_10:")
 
-    return "lesser" if a % 2 == 0 and b % 2 == 0 else "greater"
+    if a % 2 == 0 and b % 2 == 0:
+        if a < b:
+            return a
+        else:
+            return b
+    else:
+        if a > b:
+            return a
+        else:
+            return b
 
 def same_letter(string_1, string_2):
     """
