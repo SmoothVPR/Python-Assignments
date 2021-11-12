@@ -1,0 +1,10 @@
+[2021-11-11 22:42:02]: Log file created.
+[2021-11-11 22:42:02]: Logger initiated.
+[2021-11-11 22:42:02]: Target month idendified as March.
+[2021-11-11 22:42:02]: Logger destroyed.
+[2021-11-11 22:43:10]: Logger initiated.
+[2021-11-11 22:43:10]: Target month idendified as March.
+[2021-11-11 22:43:10]: Logger destroyed.
+[2021-11-11 22:43:15]: Logger initiated.
+[2021-11-11 22:43:15]: Target month idendified as January.
+[2021-11-11 22:43:16]: Logger destroyed.
