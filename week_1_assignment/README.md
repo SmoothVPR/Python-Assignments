@@ -7,11 +7,11 @@
 - [ ] Based on the month and year input values value print the values into a log file using a logger
 
 ### Example for January
-Calls Offered: 16,915
-Abandon after 30s : 2.32%
-FCR : 86.50%
-DSAT :  14.20%
-CSAT : 78.30%
+Calls Offered: 16,915  
+Abandon after 30s : 2.32%  
+FCR : 86.50%  
+DSAT :  14.20%  
+CSAT : 78.30%  
 
 - Similarly go to "VOC Rolling MoM" tab
 - Grab all the values related to Jan-18 and print.
