@@ -71,7 +71,7 @@ def function_b(data):
     The same bookshop, but this time we work on a different list. The sublists of our lists look like this: 
     [ordernumber, (article number, quantity, price per unit), ... (article number, quantity, price per unit) ] 
 
-    - [ ] Write a program which returns a list of two tuples with (order number, total amount of order).
+    - [x] Write a program which returns a list of two tuples with (order number, total amount of order).
     """
     data = clean_data_b(data)
     
