@@ -70,7 +70,7 @@ class Logger(object):
         """
         self.log(f"Logger destroyed.")
 
-        sys.stdout.write(f"Log saved to '{self.log_file}'.\n")
+        sys.stdout.write(f"\nLog saved to '{self.log_file}'.\n")
 
 if __name__ == "__main__":
     logger = Logger("test.log")
