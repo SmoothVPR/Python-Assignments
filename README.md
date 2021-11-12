@@ -14,6 +14,7 @@
 
 ### Day 4 (November 12, 2021)
 - [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/nov12/assignment_1">Assignment 1: Day_4_a</a>
-- [ ] <a href="https://github.com/smoothvpr/python-assignments/tree/main/nov12/assignment_2">Assignment 2: Day_4_b</a>
+- [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/nov12/assignment_2">Assignment 2: Day_4_b</a>
 
-### Week 2 (November 8-13, 2021)
+### Week 1 (November 8-13, 2021)
+- [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/nov12/week_1_assignment">Project 1: Data Manipulation</a>
