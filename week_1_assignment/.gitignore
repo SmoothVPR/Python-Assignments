@@ -1,10 +1,11 @@
 # Folders
 __pycache__
+venv
 
 # Filetypes
 *.ipynb
 *.txt
 *.log
 
-# Misc
-Problem_Statement.txt
+# DO NOT IGNORE!
+!requirements.txt

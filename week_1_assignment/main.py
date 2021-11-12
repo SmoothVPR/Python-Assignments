@@ -108,7 +108,7 @@ def get_dataframe(file_path, sheet_name=0):
     except:
         logger.log(f"Failed to load spreadsheet '{file_path}'.")
         logger.destroy()
-
+    
     sys.exit(1)
 
 def parse_summary(df, target_month, target_year):

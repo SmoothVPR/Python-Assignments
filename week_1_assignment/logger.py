@@ -3,10 +3,12 @@
 """
 Author:   Malik R Booker
 Created:  November 11, 2021
-Modified: November 11, 2021
+Modified: November 12, 2021
 
 Brief:
-    Custom logger module
+    Custom logger module for a Logger object that prioritizes
+    readability and manually logs events with various specified
+    commands.
 """
 
 import pathlib
@@ -16,7 +18,8 @@ from datetime import datetime
 
 class Logger(object):
     """
-    Logger object that
+    Logger object that prioritizes readability and manually logs
+    events with various specified commands.
     """
     def __init__(self, log_file):
         self.log_file   = log_file
@@ -34,7 +37,8 @@ class Logger(object):
     def init(self):
         """
         Creates specified log file if it does not already exist. Otherwise,
-        it does nothing. Finally, the write mode is changed to append.
+        it appends a separator to the existing log file. Finally, the write 
+        mode is changed to append.
         """
         if not pathlib.Path(self.log_file).is_file():
             sys.stdout.write(f"Log file not found. Creating '{self.log_file}'.\n\n")
