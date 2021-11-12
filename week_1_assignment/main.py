@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 """
-Author:   Malik R Booker
-Created:  November 11, 2021
-Modified: November 12, 2021
+Author:    Malik R Booker
+Created:   November 11, 2021
+Completed: November 12, 2021
+Modified:  November 12, 2021
 
 Brief:
     - [x] Please import csv (or) openpyxl & Logging packages for this problem.
@@ -11,9 +12,6 @@ Brief:
     - [x] Input month value from the file name where ex: January(expedia_report_monthly_january_2018.xlsx)
     - [x] Based on the month and year input values value print the values into a log file using a logger
 """
-
-DAY     = 5
-PROJECT = 1
 
 import pandas as pd
 import numpy as np
@@ -24,6 +22,9 @@ import re
 
 from datetime import datetime
 from logger import Logger
+
+DAY     = 5
+PROJECT = 1
 
 logger = Logger(f"{datetime.now().strftime('%Y-%m-%d')}_log.txt")
 
