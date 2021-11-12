@@ -42,6 +42,10 @@ class Logger(object):
         else:
             sys.stdout.write(f"Log file found. Appending to '{self.log_file}'.\n\n")
 
+            # Add dash separator in between previous and current logs
+            with open(self.log_file, 'a') as f:
+                f.write(f"\n{'-' * 80}\n\n")
+
         # Change write_mode to append
         self.write_mode = 'a'
         self.log("Logger initiated.")
@@ -60,8 +64,9 @@ class Logger(object):
         """
         Formality to denoting end of log.
         """
-        self.log("Logger destroyed.")
-        sys.stdout.write(f"\nLog saved to '{self.log_file}'.\n")
+        self.log(f"Logger destroyed.")
+
+        sys.stdout.write(f"Log saved to '{self.log_file}'.\n")
 
 if __name__ == "__main__":
     logger = Logger("test.log")
