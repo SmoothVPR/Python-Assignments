@@ -114,14 +114,15 @@ def get_dataframe(file_path, sheet_name=0):
 def parse_summary(df, target_month, target_year):
     logger.log(f"Attempting to parse {target_month} of {target_year} in '{sheet_names[0]}'...")
 
+    # Slice dataframe to only include meaningful data
     df = df.iloc[:12]       # clean up rows
     df = df[df.columns[:6]] # clean up columns
 
     # Clean up index column
-    dt_format = "%Y-%m-%d %H:%M:%S"
     df.rename(columns={'Unnamed: 0': 'index'}, inplace=True)
 
     # Clean up index datetime
+    dt_format = "%Y-%m-%d %H:%M:%S"
     convert_dt_to_month = lambda x: datetime.strptime(str(x), dt_format).strftime("%b-%y")
     df["index"] = df["index"].map(convert_dt_to_month)
 
@@ -144,8 +145,7 @@ def parse_summary(df, target_month, target_year):
 
     logger.log(f"Results for Summary Rolling MoM of {target_month} of {target_year}: {str(result)}")
 
-def parse_voc_rolling(df, target_month, target_year):
-    df, target_month
+def parse_voc(df, target_month, target_year):
     logger.log(f"Attempting to parse {target_month} of {target_year} in '{sheet_names[1]}'...")
 
     # Clean up index column
@@ -156,7 +156,7 @@ def parse_voc_rolling(df, target_month, target_year):
         if "Unnamed" in str(col):
             df.drop(col, axis=1, inplace=True)
 
-    # Clean up column names
+    # Clean up column names and replace them
     dt_format = "%Y-%m-%d %H:%M:%S"
     columns = df.columns[1:]
     new_axis = [ "index" ]
@@ -169,13 +169,13 @@ def parse_voc_rolling(df, target_month, target_year):
 
     df.set_axis(new_axis, axis=1, inplace=True)
 
-    # Drop NaN
+    # Drop empty rows
     df.dropna(axis=0, inplace=True)
 
     # Select datetime in target column
     target_dt = target_month[:3] + "-" + target_year[2:]
 
-    # Final formatting
+    # Output formatting
     columns = [ "Base Size",
                 "Promoters",
                 "Passives",
@@ -211,7 +211,7 @@ if __name__ == "__main__":
     df_summary_rolling = get_dataframe(file_path, sheet_name=sheet_names[0])
     parse_summary(df_summary_rolling, target_month, target_year)
 
-    df_voc_rolling     = get_dataframe(file_path, sheet_name=sheet_names[1])
-    parse_voc_rolling(df_voc_rolling, target_month, target_year)
+    df_voc_rolling = get_dataframe(file_path, sheet_name=sheet_names[1])
+    parse_voc(df_voc_rolling, target_month, target_year)
 
     logger.destroy()
