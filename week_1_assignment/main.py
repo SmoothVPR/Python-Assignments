@@ -138,21 +138,9 @@ def parse_summary(df: DataFrame, target_month: str, target_year: int) -> None:
     result = {}
     for column, value in zip(columns, values):
         if df[column].dtype == np.int64:
-            result[column] = f"{int(value):,}"
+            result[column] = [ f"{int(value):,}", ]
         else:
-            result[column] = f"{100 * value:.2f}%"
-
-    # result = {}
-    # for column, value in zip(columns, values):
-        # if value > 1:
-            # if column == "Base Size":
-                # result[column] = f"{int(value):,}"
-            # elif column == "Promoters":
-                # result[column] = tuple([ f"{int(value):,}", f"{'good' if value > 200 else 'bad'}" ])
-            # else: # Passives & Detractors:
-                # result[column] = tuple([ f"{int(value):,}", f"{'good' if value > 100 else 'bad'}" ])
-        # else: # Percentages in last rows
-            # result[column] = f"{100 * value:.2f}%"
+            result[column] = [ f"{100 * value:.2f}%" ]
 
     logger.log(f"Results for Summary Rolling MoM of {target_month} of {target_year}: {str(result)}")
 
@@ -211,20 +199,13 @@ def parse_voc(df: DataFrame, target_month: str, target_year: int) -> None:
     for column, value in zip(columns, values):
         if value > 1:
             if column == "Base Size":
-                result[target_dt].append(tuple([ column, f"{int(value):,}" ]))
+                result[target_dt].append(tuple([ column, [ f"{int(value):,}" ] ]))
             elif column == "Promoters":
-                result[target_dt].append(tuple([ column, f"{int(value):,}", f"{'good' if value > 200 else 'bad'}" ]))
+                result[target_dt].append(tuple([ column, [ f"{int(value):,}", f"{'good' if value > 200 else 'bad'}" ] ]))
             else: # Passives & Detractors:
-                result[target_dt].append(tuple([ column, f"{int(value):,}", f"{'good' if value > 100 else 'bad'}" ]))
+                result[target_dt].append(tuple([ column, [ f"{int(value):,}", f"{'good' if value > 100 else 'bad'}" ] ]))
         else: # Percentages in last rows
-            result[target_dt].append(tuple([ column, f"{100 * value:.2f}%" ]))
-
-    # result = {target_dt: []}
-    # for column, value in zip(columns, values):
-        # if df[column].dtype == np.int64:
-            # result[target_dt].append(tuple([ column, f"{int(value):,}" ]))
-        # else:
-            # result[target_dt].append(tuple([ column, f"{100 * value:.2f}%" ]))
+            result[target_dt].append(tuple([ column, [ f"{100 * value:.2f}%" ] ]))
 
     logger.log(f"Results for VOC Rolling MoM of {target_month} of {target_year}: {str(result)}")
 
