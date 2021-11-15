@@ -89,17 +89,13 @@ def extract_target_date(file_path: str) -> Tuple[str, int]:
         target_year = int(match.group(0))
         logger.log(f"Target year identified as {target_year}.")
 
-    # If values are truthy...
-    if target_month and target_year:
-        return (target_month, target_year)
-
     if not target_month:
         logger.err(f"Could not determine month from '{file_path}'.")
+
     if not target_year:
         logger.err(f"Could not determine year from '{file_path}'.")
 
-    logger.destroy()
-    sys.exit(1)
+    return (target_month, target_year)
 
 def get_dataframes(file_path: str) -> Tuple[DataFrame, DataFrame]:
     logger.log(f"Loading excel spreadsheet '{file_path}'...")
@@ -109,12 +105,10 @@ def get_dataframes(file_path: str) -> Tuple[DataFrame, DataFrame]:
         df_voc_rolling = pd.read_excel(file_path, sheet_name="VOC Rolling MoM")
         logger.log(f"Successfully loaded '{file_path}'.")
 
-        return (df_summary_rolling, df_voc_rolling)
     except:
         logger.err(f"Failed to load spreadsheets '{file_path}'.")
-        logger.destroy()
     
-    sys.exit(1)
+    return (df_summary_rolling, df_voc_rolling)
 
 def parse_summary(df: DataFrame, target_month: str, target_year: int) -> None:
     logger.log(f"Attempting to parse {target_month} of {target_year} in 'Summary Rolling MoM'...")
@@ -141,12 +135,12 @@ def parse_summary(df: DataFrame, target_month: str, target_year: int) -> None:
     values = target_row.values.tolist()[0][1:]
     columns = df.columns[1:]
 
-    result = []
+    result = {target_dt: []}
     for column, value in zip(columns, values):
         if df[column].dtype == np.int64:
-            result.append(tuple([ column, f"{int(value):,}" ]))
+            result[target_dt].append(tuple([ column, f"{int(value):,}" ]))
         else:
-            result.append(tuple([ column, f"{100 * value:.2f}%" ]))
+            result[target_dt].append(tuple([ column, f"{100 * value:.2f}%" ]))
 
     logger.log(f"Results for Summary Rolling MoM of {target_month} of {target_year}: {str(result)}")
 
@@ -201,17 +195,18 @@ def parse_voc(df: DataFrame, target_month: str, target_year: int) -> None:
 
     values = df[target_dt].values.tolist()
 
-    result = []
+    # result = []
+    result = {}
     for column, value in zip(columns, values):
         if value > 1:
-            if column == columns[0]: # Base Size
-                result.append(tuple([ column, f"{int(value):,}" ]))
-            elif column == columns[1]: # Promoters:
-                result.append(tuple([ column, f"{int(value):,}", "{'good' if value > 200 else 'bad'}" ]))
+            if column == "Base Size":
+                result[column] = f"{int(value):,}"
+            elif column == "Promoters":
+                result[column] = tuple([ f"{int(value):,}", f"{'good' if value > 200 else 'bad'}" ])
             else: # Passives & Detractors:
-                result.append(tuple([ column, f"{int(value):,}", "{'good' if value > 100 else 'bad'}" ]))
-        else:
-            result.append(tuple([ column, f"{100 * value:.2f}%" ]))
+                result[column] = tuple([ f"{int(value):,}", f"{'good' if value > 100 else 'bad'}" ])
+        else: # Percentages in last rows
+            result[column] = f"{100 * value:.2f}%"
 
     logger.log(f"Results for VOC Rolling MoM of {target_month} of {target_year}: {str(result)}")
 

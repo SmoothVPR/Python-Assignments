@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 Author:    Malik R Booker
 Created:   November 11, 2021
@@ -6,9 +7,8 @@ Completed: November 12, 2021
 Modified:  November 14, 2021
 
 Brief:
-    Custom logger module for a Logger object that prioritizes
-    readability and manually logs events with various specified
-    commands.
+    Custom logger module for a Logger object that prioritizes readability
+    and manually logs events with various specified commands.
 """
 
 import pathlib
@@ -16,6 +16,8 @@ import sys
 import os
 
 from datetime import datetime
+
+from typing import NoReturn
 
 class Logger(object):
     """
@@ -61,27 +63,31 @@ class Logger(object):
         self.write_mode = 'a'
         self.log("Logger initiated.")
 
-    def log(self, text: str) -> None:
+    def log(self, message: str) -> None:
         """
         Prints to standard output stream.
-        User should aim to have the text start with a Capital letter and end with a period.
+
+        User should aim to have the message start with a capital letter and end with a period.
         """
-        formatted_text = f"{self.prefix()} {text}\n"
+        formatted_message = f"{self.prefix()} {message}\n"
 
-        sys.stdout.write(formatted_text)
+        sys.stdout.write(formatted_message)
         with open(self.log_file, self.write_mode) as f:
-            f.write(formatted_text)
+            f.write(formatted_message)
 
-    def err(self, text: str) -> None:
+    def err(self, message: str) -> NoReturn:
         """
         Prints to standard error stream.
-        User should aim to have the text start with a Capital letter and end with a period.
-        """
-        formatted_text = f"{self.prefix()} --FATAL-- {text}\n"
 
-        sys.stderr.write(formatted_text)
+        User should aim to have the message start with a capital letter and end with a period.
+        """
+        formatted_message = f"{self.prefix()} FATAL ERROR. {message}\n"
+
+        sys.stderr.write(formatted_message)
         with open(self.log_file, self.write_mode) as f:
-            f.write(formatted_text)
+            f.write(formatted_message)
+
+        sys.exit(1)
 
     def destroy(self) -> None:
         """
@@ -96,5 +102,8 @@ if __name__ == "__main__":
 
     logger.init()
     logger.log("Test incident.")
-    logger.err("Test error.")
     logger.destroy()
+
+    logger.init()
+    logger.err("Test error.")
+    # logger.destroy() # Will not be reached
