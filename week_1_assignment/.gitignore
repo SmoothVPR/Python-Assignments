@@ -1,11 +1,15 @@
 # Folders
 __pycache__
 venv
+logs
 
 # Filetypes
 *.ipynb
 *.txt
 *.log
+
+# Misc
+clean.sh
 
 # DO NOT IGNORE!
 !requirements.txt
