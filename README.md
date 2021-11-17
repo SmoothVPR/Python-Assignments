@@ -17,7 +17,7 @@
 - [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/4-nov12/assignment_2">Assignment 2: Day_4_b</a>
 
 ### Week 1 (November 8-13, 2021)
-- [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/5-week_1_assignment">Project 1: Data Manipulation</a>
+- [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/5-week_1_project">Project 1: Data Manipulation</a>
 
 ### Day 6 (November 16, 2021)
 - [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/6-nov12">Assignment 1: Trivial Numpy Operations</a>
