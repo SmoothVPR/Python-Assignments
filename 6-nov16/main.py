@@ -19,6 +19,8 @@ Brief:
 
 import numpy as np
 
+DAY = 6
+
 def excercise_a() -> np.ndarray:
     return np.zeros(10)
 
@@ -35,17 +37,15 @@ def excercise_e() -> np.ndarray:
     return np.array([x for x in range(10, 51)if x % 2 == 0])
 
 def excercise_f() -> np.matrix:
-    return np.matrix([[x for x in range(0, 3)],
-                      [x for x in range(3, 6)],
-                      [x for x in range(6, 9)]] )
+    return np.matrix( [[x for x in range(0, 3)],
+                       [x for x in range(3, 6)],
+                       [x for x in range(6, 9)]] )
 
 def excercise_g() -> np.ndarray:
     return np.eye(3)
 
 def excercise_h() -> int:
     return np.random.randint(0, 10)
-
-DAY = 6
 
 if __name__ == "__main__":
     print(excercise_a())
