@@ -21,3 +21,6 @@
 
 ### Day 6 (November 16, 2021)
 - [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/6-nov16">Assignment 1: Trivial Numpy Operations</a>
+
+### Day 7 (November 16, 2021)
+- [x] <a href="https://github.com/smoothvpr/python-assignments/tree/main/7-nov17">Assignment 1: Pandas Operations</a>
