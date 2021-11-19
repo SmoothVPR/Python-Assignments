@@ -12,7 +12,7 @@ Brief:
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 import pandas as pd
-import numpy as np
+# import numpy as np
 
 import pathlib
 import sys
@@ -100,6 +100,17 @@ def handle_nyl_list(current_file: str) -> None:
         except AssertionError:
             logger.err("This file has already been processed.", exit_code=5)
 
+def get_cleaned_dataframe(df: DataFrame) -> DataFrame:
+    """
+    Attempts to return a more clean and universal dataset to the caller.
+
+    Logs non-fatal errors and continues to run.
+    Exits immediately on fatal errors.
+    """
+    new_df = df
+
+    return new_df
+
 if __name__ == "__main__":
     path = os.path.dirname(__file__)
     os.chdir(os.path.abspath(path))
@@ -112,7 +123,11 @@ if __name__ == "__main__":
     df_curr, df_prev = get_dataframes(current_file, previous_file)
     assess_line_difference(df_curr, df_prev)
 
-    # what the fuck does this do
+    # Check if the file is has already been handled
     handle_nyl_list(current_file)
+
+    # Clean up the data
+    df_curr = get_cleaned_dataframe(df_curr)
+    df_prev = get_cleaned_dataframe(df_curr)
 
     logger.destroy()
