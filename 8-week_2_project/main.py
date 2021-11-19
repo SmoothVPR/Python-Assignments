@@ -28,7 +28,9 @@ logger = Logger(f"{datetime.now().strftime('%Y-%m-%d')}_log.txt")
 
 def get_files(_dir) -> Union[NoReturn, Tuple[str, str]]:
     """
-    TODO
+    Attempts to return a tuple of two strings (current_file, previous_file)
+
+    Exits on any parsing or system error.
     """
     files = [x for x in os.listdir(_dir) if ".csv" in x]
     files.sort()
@@ -40,7 +42,10 @@ def get_files(_dir) -> Union[NoReturn, Tuple[str, str]]:
 
 def get_dataframes(current_file: str, previous_file: str) -> Tuple[DataFrame, DataFrame]:
     """
-    TODO
+    Attempts to return a tuple of two DataFrame ( df_curr, df_prev )  
+    to the caller.
+
+    Exits on any parsing or system error.
     """
     try:
         logger.log(f"Attempting to load '{current_file}'.")
@@ -58,6 +63,12 @@ def get_dataframes(current_file: str, previous_file: str) -> Tuple[DataFrame, Da
     return ( df_curr, df_prev )
 
 def assess_line_difference(df_curr, df_prev) -> Union[None, NoReturn]:
+    """
+    Asserts that the line count difference between the two DataFrame is
+    no larger than 500 lines.
+
+    Exits on failure.
+    """
     result = abs(df_curr.shape[0] - df_prev.shape[0]) < 500
 
     if result is False:
