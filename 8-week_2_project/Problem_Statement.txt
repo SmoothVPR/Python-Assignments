@@ -6,7 +6,6 @@ Problem Statement :
 
 3.Basically you need to sort the files in descending order of dates and obtain the greatest dated file which is in the filenaming convention 20210219 here in the collection provided.
 
-
 4.Check the file line count and measure that the file line count of the latest file and the file line count of one level less decrement date file has a variance of 500 lines.
 
 5. If the line count difference is more than 500 lines reject the processing of the file with exception message else process the latest file.
