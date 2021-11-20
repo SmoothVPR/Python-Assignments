@@ -21,16 +21,16 @@
 - [x] Now before reading the file capture the name of the file in NYL.lst file  
       so the filename is stored there for future reference.
 
-- [ ]  Replace the headers in the file c1 with c2 and c3 with c4 , just in case the file header is inconsistent:
-       c1='Agent Writing Contract Start Date (Carrier appointment start date)'
-       c2='Agent Writing Contract Start Date'
-       c3='Agent Writing Contract Status (actually active and cancelled\'s should come in two different files)'
-       c4='Agent Writing Contract Status'
+- [x]  Replace the headers in the file c1 with c2 and c3 with c4 , just in case the file header is inconsistent:
+    - c1='Agent Writing Contract Start Date (Carrier appointment start date)'
+    - c2='Agent Writing Contract Start Date'
+    - c3='Agent Writing Contract Status (actually active and cancelled\'s should come in two different files)'
+    - c4='Agent Writing Contract Status'
 
-- [ ] Perform the following checks on the columns:
-      The **phonenumbers** in the file should be US valid phone numbers in case they not Valid capture in the log file.
-      Check if the State is a Valid US State
-      Check is the Agent email is a valid email id
+- [x] Perform the following checks on the columns:
+    - [x] The **phonenumbers** in the file should be US valid phone numbers in case they not Valid capture in the log file.
+    - [x] Check if the State is a Valid US State
+    - [x] Check is the Agent email is a valid email id
 
 - [ ] Create a data frame of the headers as index and data as rows.Display the data frame.
 
