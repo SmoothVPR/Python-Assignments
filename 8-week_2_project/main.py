@@ -149,7 +149,7 @@ def is_valid_phone_number(phone_number: str) -> bool:
     match = re.match(regex, phone_number)
     area_code = match.group(0)[:3]
 
-    if match and area_code not in us_area_codes:
+    if match and area_code in us_area_codes:
         return True
     
     return False
