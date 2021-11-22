@@ -9,10 +9,8 @@ Brief:
     Weekend Assignment 2
 """
 
-# import matplotlib.pyplot as plt
-# import seaborn as sns
+import matplotlib.pyplot as plt
 import pandas as pd
-# import numpy as np
 
 import pathlib
 import sys
@@ -24,7 +22,9 @@ from pandas import DataFrame
 from typing import Tuple, NoReturn, Union
 
 from modules.logging import Logger
-from modules import full_state_names, abbr_state_names
+from modules import full_state_names
+from modules import abbr_state_names
+from modules import us_area_codes
 
 logger = Logger(f"{datetime.now().strftime('%Y-%m-%d')}_log.txt")
 
@@ -147,8 +147,9 @@ def is_valid_phone_number(phone_number: str) -> bool:
     # 3 numbers followed by a '.', '-', or ' '
     regex = r"^([0-9]{3}[\.\- ]){2}[0-9]{4}$"
     match = re.match(regex, phone_number)
-    
-    if match:
+    area_code = match.group(0)[:3]
+
+    if match and area_code not in us_area_codes:
         return True
     
     return False
@@ -191,6 +192,41 @@ def parse_dataframe(df: DataFrame) -> None:
         if not is_valid_email(email):
             logger.warn(f"Invalid state: '{email}' found in row {i}.")
 
+def transpose_dataframe(df: DataFrame) -> DataFrame:
+    df_transposed = df.T
+    print(df_transposed)
+
+    return df_transposed
+
+def group_agents_by_state(df: DataFrame) -> DataFrame:
+    df_grouped = df.groupby(["Agency State"]).count()["Agent Id"]
+    print(df_grouped)
+
+    return df_grouped
+
+def display_a2o_date(df: DataFrame) -> None:
+    df_copy = df
+    df_copy["Agent Name"] = df_copy['Agent First Name'].apply(lambda x: x.strip()) + " " + df_copy['Agent Last Name'].apply(lambda x: x.strip())
+
+    print(df_copy[["Agent Name", "Agent Writing Contract Start Date", "Date when an agent became A2O"]])
+
+def visualize_dataframes(df_T: DataFrame, df_G: DataFrame) -> None:
+    plt.style.use("seaborn")
+
+    _, (ax1, ax2) = plt.subplots(2, 1, figsize=(7,7))
+
+    df_T.T[["AARP Auth to Offer Level", "Agent Id"]].plot(kind="hist", ax=ax1)
+    df_G.plot(kind="bar", ax=ax2)
+
+    ax1.set_title("Transposed")
+
+    ax2.set_title("Grouped")
+    ax2.set_xlabel("State")
+    ax2.set_ylabel("Agents")
+
+    plt.savefig("Visualization.png")
+    plt.show()
+
 if __name__ == "__main__":
     # Set working directory to source file directory
     path = os.path.dirname(__file__)
@@ -218,4 +254,18 @@ if __name__ == "__main__":
     # Write after successful processing
     handle_nyl_list(current_file, operation="append")
 
+    # Display a dataframe where the columns are indices
+    df_transposed = transpose_dataframe(df_curr)
+
+    # Display a dataframe where the agents are grouped by state
+    df_grouped = group_agents_by_state(df_curr)
+
+    # Display a dataframe where the agents name, start date, and A2O date,
+    # is presented
+    display_a2o_date(df_curr)
+
+    # Make a graph to visualize the transposed and grouped dataframes
+    visualize_dataframes(df_transposed, df_grouped)
+
+    # Final cleanup
     logger.destroy()

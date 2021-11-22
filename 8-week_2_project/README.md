@@ -1,4 +1,5 @@
-### Tasks
+### Weekend project 2
+<img src="Visualization.png"/>
 - [x] Use python libraries logging,csv (or) openpyxl,phonenumbers,numpy,pandas,datetime,sys
 
 - [x] So we have FieldAgent files for NewYork Life Insurances.
@@ -32,10 +33,10 @@
     - [x] Check if the State is a Valid US State
     - [x] Check is the Agent email is a valid email id
 
-- [ ] Create a data frame of the headers as index and data as rows.Display the data frame.
+- [x] Create a data frame of the headers as index and data as rows.Display the data frame.
 
-- [ ] Create another Data Frame with which groups all the agents by Agency State.Display in the data frame.
+- [x] Create another Data Frame with which groups all the agents by Agency State.Display in the data frame.
 
-- [ ] Create a Data Frame which gives the Agent Name , Agent Writing ContractStart Date , Date when an agent became A2O.
+- [x] Create a Data Frame which gives the Agent Name , Agent Writing ContractStart Date , Date when an agent became A2O.
 
-- [ ] Create a data visualization with the Data Frame using 9,10 use pandas built-in plot function for histogram.
+- [x] Create a data visualization with the Data Frame using 9,10 use pandas built-in plot function for histogram.
