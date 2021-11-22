@@ -50,9 +50,9 @@ def excercise_c(df: DataFrame) -> None:
 
 def excercise_d(df: DataFrame) -> None:
     """
-    What is the average BasePay?
+    What is the average BasePay of the first 10000 rows?
     """
-    print(f"The average BasePay is: ${df['BasePay'].mean():,.2f}\n")
+    print(f"The average BasePay is: ${df.iloc[:10000,:]['BasePay'].mean():,.2f}\n")
 
 def excercise_e(df: DataFrame) -> None:
     """
@@ -107,9 +107,9 @@ def excercise_unique(df: DataFrame) -> None:
 
 def excercise_k(df: DataFrame) -> None:
     """
-    What are the top 5 most common jobs?
+    What are the top 7 most common jobs?
     """
-    print(f"The top 5 most common jobs:\n {df['JobTitle'].value_counts()[:5]}")
+    print(f"The top 7 most common jobs:\n {df['JobTitle'].value_counts()[:7]}")
 
 def excercise_l(df: DataFrame) -> None:
     """
@@ -117,8 +117,8 @@ def excercise_l(df: DataFrame) -> None:
     (e.g. Job Titles with only one occurrence in 2013?)
     """
 
-    group = df.groupby(by=["JobTitle"]).count().sort_values(by=["Id"], ascending=False)
-    print(f"Job Titles with only one occurrence: {sum([x for x in group['Id'] if x == 1])}")
+    group = df[df["Year"] == 2013].groupby(by=["JobTitle"]).count().sort_values(by=["Id"], ascending=False)
+    print(f"Job Titles in 2013 with only one occurrence: {sum([x for x in group['Id'] if x == 1])}")
 
 def excercise_m(df: DataFrame) -> None:
     """
